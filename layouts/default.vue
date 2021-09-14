@@ -67,6 +67,11 @@ export default {
           title: 'Register',
           icon: 'login',
           to: { name: 'register' }
+        },
+        {
+          title: 'Login',
+          icon: 'login',
+          to: { name: 'login' }
         }
       ]
     }

@@ -1,15 +1,7 @@
 <template>
   <div class="column is-4 box">
     <div class="field">
-      <div class="title">Register</div>
-    </div>
-    <div class="field">
-      <input
-        class="input"
-        type="text"
-        placeholder="Username"
-        v-model="user.username"
-      />
+      <div class="title">Login</div>
     </div>
     <div class="field">
       <input
@@ -29,8 +21,8 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-success" @click.prevent="register">
-          Register
+        <button class="button is-primary" @click.prevent="login">
+          Log in
         </button>
       </p>
     </div>
@@ -50,9 +42,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('register', ['registerUser']),
-    register() {
-      this.registerUser(this.user)
+    ...mapActions('register', ['loginUser']),
+    login() {
+      this.loginUser(this.user)
     },
   },
 }

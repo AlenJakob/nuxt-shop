@@ -1,31 +1,43 @@
 import axios from 'axios'
 const registerUrl = 'http://localhost:1337/auth/local/register'
-
+const baseUrl = 'http://localhost:1337/auth/local'
 const testUser = {
     username: 'Strapi user',
-    email: 'user@strapi.io',
+    email: 'grafuxa@gmail.com',
     password: 'strapiPassword',
 }
 
 export const state = () => ({
-    isLoggetByJwt: {},
+    isLoggedByJwt: '',
     status: false,
 })
 
 export const actions = {
-    async registerUser({ commit, state, dispatch }, user) {
-        console.log(user)
+    async registerUser({ commit }, user) {
         try {
-            const register = await axios.post(registerUrl, user)
+            const register = await axios.post(`${baseUrl}/register , ${user}`)
             if (register.status === 200) {
                 commit('IS_SUCCESS_REGISTERED', true)
-                console.log(state.status)
+                commit('SET_JWT', register.data.jwt)
             }
-            console.log(register.data)
-            console.log(register)
             return register
         } catch (err) {
             console.log(err, 'There is a error in register ')
+        }
+    },
+    async loginUser({ commit }) {
+        try {
+            const login = await axios.post(baseUrl, {
+                identifier: 'email@strapis.io',
+                password: 'Alen023',
+            })
+            if (!login.data.status === 200) return
+            commit('SET_JWT', login.data.jwt)
+            console.log(login.data.jwt)
+
+            return login
+        } catch (err) {
+            console.log(err, 'from Login')
         }
     },
 }
@@ -33,5 +45,8 @@ export const actions = {
 export const mutations = {
     IS_SUCCESS_REGISTERED(state, status) {
         state.status = status
+    },
+    SET_JWT(state, jwt) {
+        state.isLoggedByJwt = jwt
     },
 }
